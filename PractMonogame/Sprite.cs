@@ -10,8 +10,23 @@ namespace PractMonogame
 {
     internal class Sprite
     {
+        private static readonly float SCALE = 20f;
+
         public Texture2D texture;
         public Vector2 position;
+
+        public Rectangle Rect
+        {
+            get
+            {
+                return new Rectangle(
+                    (int)position.X,
+                    (int)position.Y,
+                    texture.Width * (int)SCALE,
+                    texture.Height * (int)SCALE
+                    );
+            }
+        }
 
         public Sprite(Texture2D texture, Vector2 position)
         {
@@ -19,9 +34,14 @@ namespace PractMonogame
             this.position = position;
         }
 
-        public virtual void Update()
+        public virtual void Update(GameTime gameTime)
         {
 
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, Rect, Color.White);
         }
     }
 }

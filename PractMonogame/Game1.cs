@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace PractMonogame
 {
@@ -12,7 +13,8 @@ namespace PractMonogame
 
         //Texture2D texture;
         //MovingSprite sprite;
-        List<MovingSprite> sprites;
+        List<Sprite> sprites;
+        bool space_pressed = false;
 
         public Game1()
         {
@@ -26,21 +28,25 @@ namespace PractMonogame
             // TODO: Add your initialization logic here
 
             base.Initialize();
+
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+             sprites = new();
 
             // TODO: use this.Content to load your game content here
-            Texture2D texture = Content.Load<Texture2D>("Boy down sprite");
+            //Texture2D texture = Content.Load<Texture2D>("Boy down sprite");
             //sprite = new MovingSprite(texture, Vector2.Zero, 1f);
-            sprites = new List<MovingSprite>();
+            Texture2D playerTexture = Content.Load<Texture2D>("Boy down sprite");
+            Texture2D enemyTexture = Content.Load<Texture2D>("Boy right sprite2");
 
-            for (int i = 0; i < 10; i++)
-            {
-                sprites.Add(new MovingSprite(texture, new Vector2(0, 10*i), i));
-            }
+            sprites.Add(new Sprite(enemyTexture, new Vector2(100, 100)));
+            sprites.Add(new Sprite(enemyTexture, new Vector2(400, 200)));
+            sprites.Add(new Sprite(enemyTexture, new Vector2(700, 300)));
+
+            sprites.Add(new Player(playerTexture, new Vector2(200, 200)));
         }
 
         protected override void Update(GameTime gameTime)
@@ -50,9 +56,38 @@ namespace PractMonogame
 
             // TODO: Add your update logic here
             //sprite.Update();
-            foreach (MovingSprite sprite in sprites)
+
+            if (!space_pressed && Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-                sprite.Update();
+                space_pressed = true;
+                Debug.WriteLine("Space key is pressed.");
+            }
+
+            if (space_pressed && Keyboard.GetState().IsKeyUp(Keys.Space))
+            {
+                space_pressed = false;
+                Debug.WriteLine("Space key is released.");
+            }
+
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                Debug.WriteLine("Left button is pressed.");
+            }
+
+            // To get mouse position
+            // Mouse.GetState().Position
+            // Mouse.GetState().X
+            // int mouseX = Mouse.GetState().X;
+            int mouseX = Mouse.GetState().X;
+
+            if (mouseX > 200)
+            {
+                Debug.WriteLine("Mouse x is > 200");
+            }
+
+            foreach(var sprite in sprites)
+            {
+                sprite.Update(gameTime);
             }
 
             base.Update(gameTime);
@@ -68,9 +103,9 @@ namespace PractMonogame
             //_spriteBatch.Draw(texture, new Rectangle(100, 100, 200, 200), Color.White);
             //_spriteBatch.Draw(texture, new Vector2(100, 100), Color.White);
             //_spriteBatch.Draw(sprite.texture, sprite.Rect, Color.White);
-            foreach (MovingSprite sprite in sprites)
+            foreach (var sprite in sprites)
             {
-                _spriteBatch.Draw(sprite.texture, sprite.Rect, Color.White);
+                sprite.Draw(_spriteBatch);
             }
 
             _spriteBatch.End();

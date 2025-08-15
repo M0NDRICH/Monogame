@@ -16,10 +16,10 @@ namespace PractMonogame
             this.speed = speed; 
         }
 
-        public override void Update()
-        {
-            base.Update();
-            position.X += speed;
-        }
+        //public override void Update()
+        //{
+        //    base.Update();
+        //    position.X += speed;
+        //}
     }
 }

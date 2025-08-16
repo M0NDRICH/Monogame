@@ -10,7 +10,7 @@ namespace PractMonogame
 {
     internal class Sprite
     {
-        private static readonly float SCALE = 20f;
+        private static readonly float SCALE = 10f;
 
         public Texture2D texture;
         public Vector2 position;
@@ -24,7 +24,7 @@ namespace PractMonogame
                     (int)position.Y,
                     texture.Width * (int)SCALE,
                     texture.Height * (int)SCALE
-                    );
+                );
             }
         }
 

@@ -14,6 +14,9 @@ namespace PractMonogame
         //Texture2D texture;
         //MovingSprite sprite;
         List<Sprite> sprites;
+
+        Player player;
+
         bool space_pressed = false;
 
         public Game1()
@@ -42,11 +45,13 @@ namespace PractMonogame
             Texture2D playerTexture = Content.Load<Texture2D>("Boy down sprite");
             Texture2D enemyTexture = Content.Load<Texture2D>("Boy right sprite2");
 
-            sprites.Add(new Sprite(enemyTexture, new Vector2(100, 100)));
+            //sprites.Add(new Sprite(enemyTexture, new Vector2(100, 100)));
             sprites.Add(new Sprite(enemyTexture, new Vector2(400, 200)));
-            sprites.Add(new Sprite(enemyTexture, new Vector2(700, 300)));
+            //sprites.Add(new Sprite(enemyTexture, new Vector2(700, 300)));
 
-            sprites.Add(new Player(playerTexture, new Vector2(200, 200)));
+            player = new Player(playerTexture, new Vector2(0, 200), sprites);
+
+            sprites.Add(player);
         }
 
         protected override void Update(GameTime gameTime)
@@ -55,40 +60,22 @@ namespace PractMonogame
                 Exit();
 
             // TODO: Add your update logic here
-            //sprite.Update();
-
-            if (!space_pressed && Keyboard.GetState().IsKeyDown(Keys.Space))
-            {
-                space_pressed = true;
-                Debug.WriteLine("Space key is pressed.");
-            }
-
-            if (space_pressed && Keyboard.GetState().IsKeyUp(Keys.Space))
-            {
-                space_pressed = false;
-                Debug.WriteLine("Space key is released.");
-            }
-
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
-            {
-                Debug.WriteLine("Left button is pressed.");
-            }
-
-            // To get mouse position
-            // Mouse.GetState().Position
-            // Mouse.GetState().X
-            // int mouseX = Mouse.GetState().X;
-            int mouseX = Mouse.GetState().X;
-
-            if (mouseX > 200)
-            {
-                Debug.WriteLine("Mouse x is > 200");
-            }
-
-            foreach(var sprite in sprites)
+            List<Sprite> killList = new();
+            foreach (var sprite in sprites)
             {
                 sprite.Update(gameTime);
+
+                if (sprite.Rect.Intersects(player.Rect))
+                {
+                    killList.Add(sprite);
+                }
             }
+            //player.Update(gameTime); 
+
+            //foreach (var sprite in killList)
+            //{
+            //    sprites.Remove(sprite);
+            //}
 
             base.Update(gameTime);
         }
@@ -107,6 +94,7 @@ namespace PractMonogame
             {
                 sprite.Draw(_spriteBatch);
             }
+            //player.Draw(_spriteBatch);
 
             _spriteBatch.End();
 

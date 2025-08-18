@@ -20,6 +20,9 @@ namespace PractMonogame
         int rowPos;
         int colPos;
 
+        public int OffsetX { get; set; } = 0;
+        public int OffsetY { get; set; } = 0;
+
         public AnimationManager(int numFrames, int numColumns, Vector2 size)
         { 
             this.numFrames = numFrames;
@@ -50,7 +53,7 @@ namespace PractMonogame
             colPos++;
             if (activeFrame >= numFrames)
             {
-                activeFrame = 0;
+                ResetAnimation();
             }
 
             if (colPos >= numColumns)
@@ -60,9 +63,20 @@ namespace PractMonogame
             }
         }
 
+        private void ResetAnimation()
+        {
+            activeFrame = 0;
+            colPos = 0;
+            rowPos = 0;
+        }
+
         public Rectangle GetFrame()
         {
-            return new Rectangle(colPos * (int)size.X, rowPos * (int)size.Y, (int)size.X, (int)size.Y);
+            return new Rectangle(
+                colPos * (int)size.X + OffsetX, 
+                rowPos * (int)size.Y + OffsetY, 
+                (int)size.X,
+                (int)size.Y);
         }
     }
 }

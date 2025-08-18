@@ -11,17 +11,12 @@ namespace PractMonogame
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        //Texture2D texture;
-        //MovingSprite sprite;
-        List<Sprite> sprites;
-        Texture2D[] runningTextures;
+        Texture2D spritesheet;
 
         int counter;
         int activeFrame;
-
-        Player player;
-
-        bool space_pressed = false;
+        int numFrames;
+        
 
         public Game1()
         {
@@ -41,14 +36,13 @@ namespace PractMonogame
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-             sprites = new();
 
             // TODO: use this.Content to load your game content here
-            
-            runningTextures = new Texture2D[2];
+            spritesheet = Content.Load<Texture2D>("player");
 
-            runningTextures[0] = Content.Load<Texture2D>("Boy right sprite");
-            runningTextures[1] = Content.Load<Texture2D>("Boy right sprite2");
+            activeFrame = 0;
+            numFrames = 2;
+            counter = 0;
         }
 
         protected override void Update(GameTime gameTime)
@@ -58,18 +52,17 @@ namespace PractMonogame
 
             // TODO: Add your update logic here
             counter++;
-
             if (counter > 29)
             {
                 counter = 0;
                 activeFrame++;
 
-                if (activeFrame > runningTextures.Length -1)
+                if (activeFrame == numFrames) 
                 {
                     activeFrame = 0;
                 }
             }
-
+            
             base.Update(gameTime);
         }
 
@@ -80,7 +73,12 @@ namespace PractMonogame
             // TODO: Add your drawing code here
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
-            _spriteBatch.Draw(runningTextures[activeFrame], new Rectangle(100, 100, 100, 100), Color.White);
+            _spriteBatch.Draw(
+                spritesheet,
+                new Rectangle(100, 100, 100, 100),
+                new Rectangle(activeFrame * 32 + 32, 64, 32, 32),
+                Color.White
+                );
 
             _spriteBatch.End();
 

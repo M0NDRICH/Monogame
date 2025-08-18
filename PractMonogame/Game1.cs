@@ -14,6 +14,10 @@ namespace PractMonogame
         //Texture2D texture;
         //MovingSprite sprite;
         List<Sprite> sprites;
+        Texture2D[] runningTextures;
+
+        int counter;
+        int activeFrame;
 
         Player player;
 
@@ -40,18 +44,11 @@ namespace PractMonogame
              sprites = new();
 
             // TODO: use this.Content to load your game content here
-            //Texture2D texture = Content.Load<Texture2D>("Boy down sprite");
-            //sprite = new MovingSprite(texture, Vector2.Zero, 1f);
-            Texture2D playerTexture = Content.Load<Texture2D>("Boy down sprite");
-            Texture2D enemyTexture = Content.Load<Texture2D>("Boy right sprite2");
+            
+            runningTextures = new Texture2D[2];
 
-            //sprites.Add(new Sprite(enemyTexture, new Vector2(100, 100)));
-            sprites.Add(new Sprite(enemyTexture, new Vector2(400, 200)));
-            //sprites.Add(new Sprite(enemyTexture, new Vector2(700, 300)));
-
-            player = new Player(playerTexture, new Vector2(0, 200), sprites);
-
-            sprites.Add(player);
+            runningTextures[0] = Content.Load<Texture2D>("Boy right sprite");
+            runningTextures[1] = Content.Load<Texture2D>("Boy right sprite2");
         }
 
         protected override void Update(GameTime gameTime)
@@ -60,22 +57,18 @@ namespace PractMonogame
                 Exit();
 
             // TODO: Add your update logic here
-            List<Sprite> killList = new();
-            foreach (var sprite in sprites)
-            {
-                sprite.Update(gameTime);
+            counter++;
 
-                if (sprite.Rect.Intersects(player.Rect))
+            if (counter > 29)
+            {
+                counter = 0;
+                activeFrame++;
+
+                if (activeFrame > runningTextures.Length -1)
                 {
-                    killList.Add(sprite);
+                    activeFrame = 0;
                 }
             }
-            //player.Update(gameTime); 
-
-            //foreach (var sprite in killList)
-            //{
-            //    sprites.Remove(sprite);
-            //}
 
             base.Update(gameTime);
         }
@@ -87,14 +80,7 @@ namespace PractMonogame
             // TODO: Add your drawing code here
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
-            //_spriteBatch.Draw(texture, new Rectangle(100, 100, 200, 200), Color.White);
-            //_spriteBatch.Draw(texture, new Vector2(100, 100), Color.White);
-            //_spriteBatch.Draw(sprite.texture, sprite.Rect, Color.White);
-            foreach (var sprite in sprites)
-            {
-                sprite.Draw(_spriteBatch);
-            }
-            //player.Draw(_spriteBatch);
+            _spriteBatch.Draw(runningTextures[activeFrame], new Rectangle(100, 100, 100, 100), Color.White);
 
             _spriteBatch.End();
 

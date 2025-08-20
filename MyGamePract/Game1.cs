@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace MyGamePract
 {
@@ -12,6 +14,11 @@ namespace MyGamePract
         Player sprite;
         Texture2D spritesheet;
         AnimationManager am;
+        Song song;
+        SoundEffect effect;
+        SoundEffectInstance effectInstance;
+
+        KeyboardState prevKBState;
 
         private SpriteFont font;
         int score = 0;
@@ -45,6 +52,12 @@ namespace MyGamePract
             };
             Texture2D playerTexture = Content.Load<Texture2D>("Boy down sprite");
             sprite = new Player(playerTexture, new Vector2(200, 200));
+            song = Content.Load<Song>("Audio/The Snowbird Strut");
+            effect = Content.Load<SoundEffect>("Audio/jump");
+            effectInstance = effect.CreateInstance();
+
+            effectInstance.IsLooped = true;
+ 
 
             font = Content.Load<SpriteFont>("Fonts/spritefont");
         }
@@ -67,6 +80,29 @@ namespace MyGamePract
             {
                 isPressed = false;
             }
+
+            KeyboardState currentKBState = Keyboard.GetState();
+
+            if (currentKBState.IsKeyDown(Keys.M) && !prevKBState.IsKeyDown(Keys.M))
+            {
+                MediaPlayer.Play(song);
+            }
+            if (currentKBState.IsKeyDown(Keys.P) && !prevKBState.IsKeyDown(Keys.P))
+            {
+                MediaPlayer.Pause();
+            }
+            if (currentKBState.IsKeyDown(Keys.R) && !prevKBState.IsKeyDown(Keys.R))
+            {
+                MediaPlayer.Resume();
+            }
+
+            if (currentKBState.IsKeyDown(Keys.S) && !prevKBState.IsKeyDown(Keys.S))
+            {
+                //effectInstance.Play();
+                effect.Play();
+            }
+
+            prevKBState = currentKBState;
 
             base.Update(gameTime);
         }

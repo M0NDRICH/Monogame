@@ -25,6 +25,13 @@
 /processorParam:TextureFormat=Color
 /build:Boy down sprite.png
 
+#begin Fonts/spritefont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/spritefont.spritefont
+
 #begin player.png
 /importer:TextureImporter
 /processor:TextureProcessor

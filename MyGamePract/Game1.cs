@@ -13,6 +13,10 @@ namespace MyGamePract
         Texture2D spritesheet;
         AnimationManager am;
 
+        private SpriteFont font;
+        int score = 0;
+        bool isPressed = false;
+
 
         public Game1()
         {
@@ -41,6 +45,8 @@ namespace MyGamePract
             };
             Texture2D playerTexture = Content.Load<Texture2D>("Boy down sprite");
             sprite = new Player(playerTexture, new Vector2(200, 200));
+
+            font = Content.Load<SpriteFont>("Fonts/spritefont");
         }
 
         protected override void Update(GameTime gameTime)
@@ -52,6 +58,16 @@ namespace MyGamePract
             sprite.Update(gameTime);
             am.Update(sprite.isMoving);
 
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && !isPressed)
+            {
+                score++;
+                isPressed = true;
+            }
+            if (Keyboard.GetState().IsKeyUp(Keys.Space) && isPressed)
+            {
+                isPressed = false;
+            }
+
             base.Update(gameTime);
         }
 
@@ -61,6 +77,9 @@ namespace MyGamePract
 
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             //sprite.Draw(_spriteBatch);
+            _spriteBatch.DrawString(font, "Hello, World", Vector2.Zero, Color.White);
+
+            _spriteBatch.DrawString(font, $"Pressed counter: {score}", new Vector2(100, 100), Color.AliceBlue);
             _spriteBatch.Draw(
                spritesheet,
                new Rectangle((int)sprite.position.X, (int)sprite.position.Y, 100, 100),

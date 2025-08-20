@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PractMonogame", "PractMonog
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGamePract", "MyGamePract\MyGamePract.csproj", "{D7443F00-15FE-4017-BA41-9F7F278D24F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scene-Management", "Scene-Management\Scene-Management.csproj", "{8E5C50AC-46DB-49BB-9DE5-552AACEF94A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D7443F00-15FE-4017-BA41-9F7F278D24F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7443F00-15FE-4017-BA41-9F7F278D24F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7443F00-15FE-4017-BA41-9F7F278D24F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E5C50AC-46DB-49BB-9DE5-552AACEF94A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E5C50AC-46DB-49BB-9DE5-552AACEF94A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E5C50AC-46DB-49BB-9DE5-552AACEF94A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E5C50AC-46DB-49BB-9DE5-552AACEF94A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

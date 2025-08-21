@@ -1,2 +1,2 @@
-﻿using var game = new Scene_Management.Game1();
+﻿using var game = new SceneManagement.Game1();
 game.Run();
